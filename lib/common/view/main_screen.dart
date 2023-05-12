@@ -15,13 +15,21 @@ class MainScreen extends StatelessWidget {
           Text('2023년 05월 06일 추첨'),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              LottoBall(number: '1'),
-              LottoBall(number: '2'),
-              LottoBall(number: '3'),
-              LottoBall(number: '4'),
-              LottoBall(number: '5'),
-              LottoBall(number: '6'),
+            children: [
+              const LottoBall(number: '1'),
+              const LottoBall(number: '2'),
+              const LottoBall(number: '3'),
+              const LottoBall(number: '4'),
+              const LottoBall(number: '5'),
+              const LottoBall(number: '6'),
+              Padding(
+                padding: const EdgeInsets.all(3.0),
+                child: Image.asset(
+                  'assets/images/plus.png',
+                  width: MediaQuery.of(context).size.width / 20,
+                ),
+              ),
+              const LottoBall(number: '7'),
             ],
           ),
         ],
