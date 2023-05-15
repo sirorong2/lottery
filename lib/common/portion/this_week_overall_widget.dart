@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:lottery/common/component/lotto_ball.dart';
 
-class ThisWeekPartionWidget extends StatelessWidget {
-  const ThisWeekPartionWidget({Key? key}) : super(key: key);
+class ThisWeekOverallWidget extends StatelessWidget {
+  const ThisWeekOverallWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -41,29 +41,20 @@ class ThisWeekPartionWidget extends StatelessWidget {
             const LottoBall(number: '7'),
           ],
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              onPressed: () {},
-              child: const Text(
-                '회차선택',
-              ),
-            ),
-            ElevatedButton(
-              onPressed: () {},
-              child: const Text(
-                'QR 당첨 확인',
-              ),
-            ),
-            ElevatedButton(
-              onPressed: () {},
-              child: const Text(
-                '당첨번호 공유',
-              ),
-            ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: const [
+            Text('총 판매금액'),
+            Text('1등 당첨금액'),
+            Text('1등 당첨자'),
           ],
-        )
+        ),
+        ElevatedButton(
+          onPressed: () {},
+          child: const Text(
+            '당첨정보 자세히 보기',
+          ),
+        ),
       ],
     );
   }
