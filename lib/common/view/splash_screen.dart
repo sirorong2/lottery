@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:lottery/common/data/fetch_data.dart';
 import 'package:lottery/common/layout/default_layout.dart';
 import 'package:lottery/common/view/main_screen.dart';
+import 'package:lottery/model/lotto_model.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -12,10 +14,13 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  Future<LottoModel>? data;
   @override
   void initState() {
     super.initState();
     //데이터 불러오기
+    data = FetchData().fetchLotto('1067');
+
     //임시로 듀레이션 처리
     Timer(
       const Duration(seconds: 5),

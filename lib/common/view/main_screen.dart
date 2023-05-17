@@ -2,20 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:lottery/common/layout/default_layout.dart';
 import '../portion/this_week_overall_widget.dart';
 
-
 class MainScreen extends StatelessWidget {
   const MainScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
-        title: 'Lotto',
-        child: Column(
-          children: const [
-            ThisWeekOverallWidget(),
-            _Bottom(),
-          ],
-        ));
+      title: 'Lotto',
+      child: Column(
+        children: const [
+          ThisWeekOverallWidget(),
+          const SizedBox(height: 20,),
+          _Bottom(),
+        ],
+      ),
+    );
   }
 }
 
@@ -24,7 +25,7 @@ class _Bottom extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Row(
+    return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         ElevatedButton(
