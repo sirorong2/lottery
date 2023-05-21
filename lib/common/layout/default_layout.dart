@@ -14,10 +14,7 @@ class DefaultLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: renderAppBar(),
-      body: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: child,
-      ),
+      body: child,
     );
   }
 

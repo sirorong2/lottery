@@ -55,12 +55,12 @@ class LottoModel {
       firstPrzwnerCo: json["firstPrzwnerCo"],
       firstAccumamnt: json["firstAccumamnt"],
       drwNo: json["drwNo"],
-      drwtNo1: json["drwNo1"],
-      drwtNo2: json["drwNo2"],
-      drwtNo3: json["drwNo3"],
-      drwtNo4: json["drwNo4"],
-      drwtNo5: json["drwNo5"],
-      drwtNo6: json["drwNo6"],
+      drwtNo1: json["drwtNo1"],
+      drwtNo2: json["drwtNo2"],
+      drwtNo3: json["drwtNo3"],
+      drwtNo4: json["drwtNo4"],
+      drwtNo5: json["drwtNo5"],
+      drwtNo6: json["drwtNo6"],
       bnusNo: json["bnusNo"],);
   }
 
