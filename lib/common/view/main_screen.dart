@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:lottery/common/layout/default_layout.dart';
+import 'package:lottery/common/repository/lotto_repository.dart';
 import '../portion/this_week_overall_widget.dart';
 
 class MainScreen extends StatefulWidget {
@@ -11,57 +12,32 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-
-
-
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-
     loadData();
   }
 
   Future<void> loadData() async {
-    try{
-
-      // for(int i = 1060; i< 1067; i++) {
-      //   fetchData(drwNo: i);
-      // }
-
+    try {
       List<Future> futures = [];
 
       for (int i = 1060; i < 1068; i++) {
         futures.add(
-          fetchData(drwNo: i),
+          LottoRepository.fetchData(drwNo: i),
         );
       }
 
       await Future.wait(futures);
-    } on DioError catch(e){
+    } on DioError catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text(
             '인터넷 연결이 원활하지 않습니다.',
           ),
         ),
       );
     }
-
-  }
-
-  Future<void> fetchData({required int drwNo}) async {
-    var dio = Dio();
-    dio.options.connectTimeout = 5000;
-    dio.options.receiveTimeout = 3000;
-    print('요청 $drwNo');
-    final response = await dio
-        .get('https://www.dhlottery.co.kr/common.do', queryParameters: {
-      'method': 'getLottoNumber',
-      'drwNo': drwNo,
-    });
-    print(response.statusCode);
-    print(response.data);
   }
 
   @override
