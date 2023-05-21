@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:lottery/common/layout/default_layout.dart';
+import 'package:lottery/model/lotto_model.dart';
 import '../portion/this_week_overall_widget.dart';
 
 class MainScreen extends StatelessWidget {
-  const MainScreen({Key? key}) : super(key: key);
+  const MainScreen({Key? key,}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
