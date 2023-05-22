@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:lottery/common/component/lotto_ball.dart';
+import 'package:lottery/common/const/hive.dart';
+import 'package:lottery/model/lotto_model.dart';
 
 class ThisWeekOverallWidget extends StatelessWidget {
   const ThisWeekOverallWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var box = Hive.box<LottoModel>(hiveBoxName);
+    LottoModel thisWeekLotto = box.values.last;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -13,11 +18,13 @@ class ThisWeekOverallWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Icon(Icons.update),
-            Column(
-              children: const [
-                Text('1066회 당첨번호'),
-                Text('2023년 05월 06일 추첨'),
-              ],
+            Expanded(
+              child: Column(
+                children: [
+                  Text('${thisWeekLotto.drwNo} 회 당첨번호'),
+                  Text('${thisWeekLotto.drwNoDate} 추첨'),
+                ],
+              ),
             ),
             const Icon(Icons.qr_code),
           ],
@@ -25,12 +32,12 @@ class ThisWeekOverallWidget extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const LottoBall(number: '1'),
-            const LottoBall(number: '2'),
-            const LottoBall(number: '3'),
-            const LottoBall(number: '4'),
-            const LottoBall(number: '5'),
-            const LottoBall(number: '6'),
+            LottoBall(number: thisWeekLotto.drwtNo1),
+            LottoBall(number: thisWeekLotto.drwtNo2),
+            LottoBall(number: thisWeekLotto.drwtNo3),
+            LottoBall(number: thisWeekLotto.drwtNo4),
+            LottoBall(number: thisWeekLotto.drwtNo5),
+            LottoBall(number: thisWeekLotto.drwtNo6),
             Padding(
               padding: const EdgeInsets.all(3.0),
               child: Image.asset(
@@ -38,15 +45,15 @@ class ThisWeekOverallWidget extends StatelessWidget {
                 width: MediaQuery.of(context).size.width / 20,
               ),
             ),
-            const LottoBall(number: '7'),
+            LottoBall(number: thisWeekLotto.bnusNo),
           ],
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: const [
-            Text('총 판매금액'),
-            Text('1등 당첨금액'),
-            Text('1등 당첨자'),
+          children: [
+            Text('총 판매금액: ${thisWeekLotto.totSellamnt}'),
+            Text('1등 당첨금액: ${thisWeekLotto.firstWinamnt}'),
+            Text('1등 당첨자: ${thisWeekLotto.firstPrzwnerCo}'),
           ],
         ),
         ElevatedButton(

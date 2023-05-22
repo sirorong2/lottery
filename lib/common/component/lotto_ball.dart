@@ -6,7 +6,7 @@ class LottoBall extends StatelessWidget {
     required this.number,
   }) : super(key: key);
 
-  final String number;
+  final int number;
 
   @override
   Widget build(BuildContext context) {
