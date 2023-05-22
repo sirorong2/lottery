@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
+import 'package:lottery/model/lotto_model.dart';
 
 class LottoRepository{
-  static Future<void> fetchData({required int drwNo}) async {
+  static Future<String> fetchData({required int drwNo}) async {
     var dio = Dio();
     dio.options.connectTimeout = 5000;
     dio.options.receiveTimeout = 3000;
@@ -11,8 +14,14 @@ class LottoRepository{
       'method': 'getLottoNumber',
       'drwNo': drwNo,
     });
-    print(response.statusCode);
-    print(response.data);
+    // print(response.statusCode);
+    // print(response.data.runtimeType);
+    // print(response.runtimeType);
+    //
+    // var decodeData = jsonDecode(response.data);
+    // // print('decodeData : $decodeData');
+    // return LottoModel.formJson(decodeData);
+    return response.data;
   }
 }
 

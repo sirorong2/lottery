@@ -1,32 +1,51 @@
+import 'package:hive_flutter/hive_flutter.dart';
+
+part 'lotto_model.g.dart';
+
+@HiveType(typeId: 1)
 class LottoModel {
   //회차
+  @HiveField(0)
   final int drwNo;
 
   //추첨일
+  @HiveField(1)
   final String drwNoDate;
 
   //요청결과
+  @HiveField(2)
   final String returnValue;
 
   //총 상금액
+  @HiveField(3)
   final int totSellamnt;
 
   //1등 당첨액
+  @HiveField(4)
   final int firstWinamnt;
 
   //1등 당첨인원
+  @HiveField(5)
   final int firstPrzwnerCo;
 
   //1등 총 상금액
+  @HiveField(6)
   final int firstAccumamnt;
 
   //로또 번호
+  @HiveField(7)
   final int drwtNo1;
+  @HiveField(8)
   final int drwtNo2;
+  @HiveField(9)
   final int drwtNo3;
+  @HiveField(10)
   final int drwtNo4;
+  @HiveField(11)
   final int drwtNo5;
+  @HiveField(12)
   final int drwtNo6;
+  @HiveField(13)
   final int bnusNo;
 
   LottoModel(
