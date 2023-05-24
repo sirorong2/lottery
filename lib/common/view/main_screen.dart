@@ -17,6 +17,8 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  var box = Hive.box<LottoModel>(hiveBoxName);
+
   @override
   void initState() {
     super.initState();
@@ -33,9 +35,14 @@ class _MainScreenState extends State<MainScreen> {
         now.hour,
       );
 
-      var box = Hive.box<LottoModel>(hiveBoxName);
+      DateTime lastFetchDay;
+      if (box.isEmpty) {
+        lastFetchDay = DateTime(2002, 12, 6);
+      } else {
+        lastFetchDay = DateTime.parse(box.values.last.drwNoDate);
+      }
 
-      DateTime lastFetchDay = DateTime.parse(box.values.last.drwNoDate);
+      //print('lastFetchDay: $lastFetchDay');
 
       if (fetchTime.difference(lastFetchDay) < const Duration(days: 7)) {
         print('이미 최신 데이터가 있습니다.');
@@ -45,6 +52,7 @@ class _MainScreenState extends State<MainScreen> {
       List<Future> futures = [];
 
       for (int i = 1060; i < 1069; i++) {
+        //print('fetch: $i');
         futures.add(
           LottoRepository.fetchData(drwNo: i),
         );
@@ -63,6 +71,8 @@ class _MainScreenState extends State<MainScreen> {
         final value = resultList[i];
         box.put(key, value);
       }
+
+      //print('afterBox: ${box.values.length}');
     } on DioError catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -80,11 +90,13 @@ class _MainScreenState extends State<MainScreen> {
         title: 'Lotto',
         child: Padding(
           padding: EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              ThisWeekOverallWidget(),
-              _Bottom(),
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                ThisWeekOverallWidget(),
+                _Bottom(),
+              ],
+            ),
           ),
         ));
   }

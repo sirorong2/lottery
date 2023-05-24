@@ -14,7 +14,7 @@ class LottoRepository{
       'method': 'getLottoNumber',
       'drwNo': drwNo,
     });
-    // print(response.statusCode);
+    print(response.statusCode);
     // print(response.data.runtimeType);
     // print(response.runtimeType);
     //
