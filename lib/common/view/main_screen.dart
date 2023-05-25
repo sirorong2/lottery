@@ -22,7 +22,10 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
-    loadData();
+    //이닛스테이트가 끝나기전에 아래내용이 호출되는걸 방지(에러 해결)
+    Future.delayed(Duration.zero, () {
+      loadData();
+    });
   }
 
   Future<void> loadData() async {
@@ -41,14 +44,20 @@ class _MainScreenState extends State<MainScreen> {
       } else {
         lastFetchDay = DateTime.parse(box.values.last.drwNoDate);
       }
-
       //print('lastFetchDay: $lastFetchDay');
-
       if (fetchTime.difference(lastFetchDay) < const Duration(days: 7)) {
         print('이미 최신 데이터가 있습니다.');
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              '이미 최신 데이터가 있습니다.',
+            ),
+          ),
+        );
         return;
       }
 
+      //요청들을 담는 List
       List<Future> futures = [];
 
       for (int i = 1060; i < 1069; i++) {
@@ -71,7 +80,6 @@ class _MainScreenState extends State<MainScreen> {
         final value = resultList[i];
         box.put(key, value);
       }
-
       //print('afterBox: ${box.values.length}');
     } on DioError catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(

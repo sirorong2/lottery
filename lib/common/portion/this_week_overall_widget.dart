@@ -1,12 +1,23 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:lottery/common/component/lotto_ball.dart';
 import 'package:lottery/common/const/hive.dart';
 import 'package:lottery/common/util/util.dart';
 import 'package:lottery/model/lotto_model.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
 
-class ThisWeekOverallWidget extends StatelessWidget {
+class ThisWeekOverallWidget extends StatefulWidget {
   const ThisWeekOverallWidget({Key? key}) : super(key: key);
+
+  @override
+  State<ThisWeekOverallWidget> createState() => _ThisWeekOverallWidgetState();
+}
+
+class _ThisWeekOverallWidgetState extends State<ThisWeekOverallWidget> {
+  @override
+  void initState() {}
 
   @override
   Widget build(BuildContext context) {
@@ -20,28 +31,35 @@ class ThisWeekOverallWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             GestureDetector(
-                onTap: () {
-                  final now = DateTime.now();
-                  final fetchTime = DateTime(
-                    now.year,
-                    now.month,
-                    now.day,
-                    now.hour,
+              onTap: () {
+                final now = DateTime.now();
+                final fetchTime = DateTime(
+                  now.year,
+                  now.month,
+                  now.day,
+                  now.hour,
+                );
+
+                DateTime lastFetchDay =
+                    DateTime.parse(box.values.last.drwNoDate);
+                //print('lastFetchDay: $lastFetchDay');
+
+                if (fetchTime.difference(lastFetchDay) <
+                    const Duration(days: 7)) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                        '이미 최신 데이터가 있습니다.',
+                      ),
+                    ),
                   );
-
-                  DateTime lastFetchDay =
-                      DateTime.parse(box.values.last.drwNoDate);
-                  //print('lastFetchDay: $lastFetchDay');
-
-                  if (fetchTime.difference(lastFetchDay) <
-                      const Duration(days: 7)) {
-                    print('이미 최신 데이터가 있습니다.');
-                    return;
-                  }
-                },
-                child: const Icon(
-                  Icons.update,
-                )),
+                  return;
+                }
+              },
+              child: const Icon(
+                Icons.update,
+              ),
+            ),
             Expanded(
               child: Column(
                 children: [
@@ -51,7 +69,23 @@ class ThisWeekOverallWidget extends StatelessWidget {
               ),
             ),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return MobileScanner(
+                      // fit: BoxFit.contain,
+                      onDetect: (capture) {
+                        final List<Barcode> barcodes = capture.barcodes;
+                        final Uint8List? image = capture.image;
+                        for (final barcode in barcodes) {
+                          debugPrint('Barcode found! ${barcode.rawValue}');
+                        }
+                      },
+                    );
+                  },
+                );
+              },
               child: const Icon(
                 Icons.qr_code,
               ),
@@ -97,7 +131,7 @@ class ThisWeekOverallWidget extends StatelessWidget {
               barrierDismissible: true,
               context: context,
               builder: (context) {
-                return  AlertDialog(
+                return AlertDialog(
                   actions: [
                     SizedBox(
                       width: double.infinity,
